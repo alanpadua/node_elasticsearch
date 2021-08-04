@@ -1,0 +1,23 @@
+{
+  "name": "docker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev src/server.ts",
+    "infra-up": "docker-compose -f docker/docker-compose.yml up -d",
+    "infra-down": "docker-compose -f docker/docker-compose.yml down"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/pg": "^8.6.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/elasticsearch": "^5.0.38",
+    "elasticsearch": "^16.7.2",
+    "express": "^4.17.1",
+    "pg": "^8.7.1"
+  }
+}

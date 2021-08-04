@@ -1,0 +1,52 @@
+version: "3"
+services:
+  elasticsearch01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+    restart: always    
+    container_name: elasticsearch01
+    ports: 
+      - 9200:9200
+      - 9300:9300
+    environment:
+      discovery.type: single-node
+    volumes:
+      - ELASTIC_SEARCH_DATA:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+  
+  kibana01:
+    image: docker.elastic.co/kibana/kibana:7.9.2
+    container_name: kibana01
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch01:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch01:9200
+    networks:
+      - elastic
+
+  postgresql:
+    image: postgres:9.4
+    container_name: postgresql
+    restart: always      
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      PGDATA: /var/lib/postgresql/data/pgdata 
+      # PGDATA: -v /custom/mount:/var/lib/postgresql/data
+    volumes: 
+      - PGDATA_POSGRES:/var/lib/postgresql/data
+      # - /mnt/A4D84114D840E660/ProjetosPessoais/ElasticSearch/elasticsearch_treino/docker/PGDATA_DOCKER:/var/lib/postgresql/data
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge
+
+volumes:
+  PGDATA_POSGRES:
+    external: true
+  ELASTIC_SEARCH_DATA:
+    external: true
