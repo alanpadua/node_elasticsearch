@@ -1,0 +1,5 @@
+node_modules
+docker/carga_py/archive_imagens.zip
+docker/dvdrental.zip
+*.lock
+*.vscode
